@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SMS | Account Settings</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    
+    <style>
+        :root {
+            --sidebar-bg: #ffffff;
+            --main-bg: #f4f7fe;
+            --accent-blue: #0052cc;
+            --text-dark: #1b2559;
+            --text-gray: #a3aed0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--main-bg);
+            color: var(--text-dark);
+        }
+
+        /* Sidebar (Matching previous pages) */
+        .sidebar {
+            width: 280px;
+            height: 95vh;
+            position: fixed;
+            top: 2.5vh;
+            left: 20px;
+            background: var(--sidebar-bg);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            padding: 30px 20px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .nav-link {
+            color: var(--text-gray);
+            padding: 15px 20px;
+            border-radius: 12px;
+            margin-bottom: 8px;
+            transition: 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            text-decoration: none;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            background: #f0f5ff;
+            color: var(--accent-blue);
+            font-weight: 700;
+        }
+
+        .main-content {
+            margin-left: 320px;
+            padding: 40px;
+        }
+
+        /* Profile Card */
+        .settings-card {
+            background: white;
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.02);
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .profile-header {
+            background: linear-gradient(135deg, #0052cc 0%, #60a5fa 100%);
+            height: 120px;
+            position: relative;
+        }
+
+        .profile-img-container {
+            position: absolute;
+            bottom: -40px;
+            left: 40px;
+        }
+
+        .profile-img {
+            width: 100px;
+            height: 100px;
+            border: 5px solid white;
+            border-radius: 25px;
+            background: white;
+        }
+
+        .nav-tabs-custom .nav-link {
+            border: none;
+            color: var(--text-gray);
+            font-weight: 600;
+            padding: 15px 25px;
+            border-bottom: 3px solid transparent;
+        }
+
+        .nav-tabs-custom .nav-link.active {
+            color: var(--accent-blue);
+            border-bottom: 3px solid var(--accent-blue);
+            background: transparent;
+        }
+
+        .form-control {
+            border: 2px solid #f0f3f9;
+            border-radius: 12px;
+            padding: 12px;
+        }
+
+        .btn-update {
+            background: var(--accent-blue);
+            color: white;
+            border-radius: 12px;
+            padding: 10px 30px;
+            font-weight: 600;
+            border: none;
+        }
+    </style>
+</head>
+<body>
+
+    <aside class="sidebar">
+        <div class="mb-5 px-3">
+            <h4 class="fw-bold text-primary">SMS PORTAL</h4>
+        </div>
+        <nav class="nav flex-column">
+            <a href="dashboard.html" class="nav-link"><i class="bi bi-grid-fill"></i> Dashboard</a>
+            <a href="students.html" class="nav-link"><i class="bi bi-people-fill"></i> Students</a>
+            <a href="courses.html" class="nav-link"><i class="bi bi-journal-bookmark-fill"></i> Courses</a>
+            <a href="settings.html" class="nav-link active"><i class="bi bi-gear-fill"></i> Settings</a>
+        </nav>
+        <a href="index.html" class="mt-auto nav-link text-danger"><i class="bi bi-box-arrow-left"></i> Logout</a>
+    </aside>
+
+    <main class="main-content">
+        <h3 class="fw-bold mb-4">Account Settings</h3>
+
+        <div class="settings-card">
+            <div class="profile-header"></div>
+            
+            <div class="p-4 pt-5 mt-2">
+                <div class="profile-img-container">
+                    <img src="https://ui-avatars.com/api/?name=Admin+User&background=0052cc&color=fff" class="profile-img shadow-sm">
+                </div>
+                
+                <div class="d-flex justify-content-between align-items-end mb-4">
+                    <div style="margin-left: 115px;">
+                        <h4 class="fw-bold mb-0">Administrator</h4>
+                        <p class="text-muted small">System Manager</p>
+                    </div>
+                </div>
+
+                <ul class="nav nav-tabs nav-tabs-custom mb-4" id="settingsTab" role="tablist">
+                    <li class="nav-item">
+                        <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#profile" type="button">Edit Profile</button>
+                    </li>
+                    <li class="nav-item">
+                        <button class="nav-link" data-bs-toggle="tab" data-bs-target="#security" type="button">Security</button>
+                    </li>
+                </ul>
+
+                <div class="tab-content" id="settingsTabContent">
+                    <div class="tab-pane fade show active" id="profile">
+                        <form class="row g-3">
+                            <div class="col-md-6">
+                                <label class="form-label small fw-bold text-muted">Full Name</label>
+                                <input type="text" class="form-control" value="System Administrator">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label small fw-bold text-muted">Email Address</label>
+                                <input type="email" class="form-control" value="admin@university.edu">
+                            </div>
+                            <div class="col-12 mt-4">
+                                <button type="submit" class="btn btn-update">Save Changes</button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="tab-pane fade" id="security">
+                        <form class="row g-3">
+                            <div class="col-md-12">
+                                <label class="form-label small fw-bold text-muted">Current Password</label>
+                                <input type="password" class="form-control" placeholder="••••••••">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label small fw-bold text-muted">New Password</label>
+                                <input type="password" class="form-control">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label small fw-bold text-muted">Confirm New Password</label>
+                                <input type="password" class="form-control">
+                            </div>
+                            <div class="col-12 mt-4">
+                                <button type="submit" class="btn btn-update">Update Password</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

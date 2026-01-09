@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SMS | Course Management</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
+    <style>
+        :root {
+            --sidebar-bg: #ffffff;
+            --main-bg: #f4f7fe;
+            --accent: #0052cc;
+            --accent-light: #e7efff;
+            --text-dark: #1b2559;
+            --text-gray: #a3aed0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--main-bg);
+            color: var(--text-dark);
+            overflow-x: hidden;
+        }
+
+        /* Loading Bar Animation */
+        .loading-bar {
+            position: fixed; top: 0; left: 0; height: 4px; width: 100%; z-index: 9999; overflow: hidden;
+        }
+        .loading-bar::before {
+            content: ""; position: absolute; left: -40%; width: 40%; height: 100%;
+            background: linear-gradient(90deg, transparent, #0052cc, #007bff, #0052cc, transparent);
+            animation: loadmove 1.6s infinite ease-in-out;
+        }
+        @keyframes loadmove { from { left: -40%; } to { left: 100%; } }
+
+        /* Sidebar Styling */
+        .sidebar {
+            width: 280px; height: 95vh; position: fixed; top: 2.5vh; left: 20px;
+            background: var(--sidebar-bg); border-radius: 22px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.05); padding: 30px 20px;
+            display: flex; flex-direction: column;
+        }
+        .sidebar-brand {
+            font-weight: 800; font-size: 1.2rem; color: var(--accent);
+            margin-bottom: 50px; padding-left: 15px; border-left: 4px solid var(--accent);
+            text-decoration: none;
+        }
+        .nav-link {
+            color: var(--text-gray); font-weight: 600; padding: 15px 20px;
+            border-radius: 14px; margin-bottom: 10px; display: flex;
+            align-items: center; gap: 15px; transition: 0.3s; text-decoration: none;
+        }
+        .nav-link:hover, .nav-link.active { background: var(--accent-light); color: var(--accent); }
+        .logout-btn {
+            margin-top: auto; color: #ff5f5f; font-weight: 600; padding: 15px 20px;
+            border-radius: 14px; display: flex; align-items: center; gap: 15px;
+            transition: 0.3s; text-decoration: none;
+        }
+        .logout-btn:hover { background: #fff0f0; }
+
+        /* Main Content */
+        .main-content { margin-left: 330px; padding: 40px; }
+
+        /* Course List Card */
+        .course-card {
+            background: #fff; border-radius: 22px; padding: 30px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.04);
+        }
+
+        .course-item {
+            border-bottom: 1px solid #f1f4f9; padding: 20px 10px;
+            transition: 0.3s; display: flex; align-items: center; justify-content: space-between;
+        }
+        .course-item:hover { background: #fafbff; transform: translateX(5px); }
+        .course-item:last-child { border-bottom: none; }
+
+        .course-icon {
+            width: 45px; height: 45px; background: var(--accent-light);
+            color: var(--accent); border-radius: 12px; display: flex;
+            align-items: center; justify-content: center; font-weight: 700;
+        }
+
+        .btn-add-course {
+            background: var(--accent); color: white; border-radius: 12px;
+            padding: 12px 25px; font-weight: 600; border: none; transition: 0.3s;
+        }
+        .btn-add-course:hover { background: #003e99; transform: translateY(-2px); box-shadow: 0 5px 15px rgba(0, 82, 204, 0.3); }
+
+        .btn-delete {
+            color: #ff5f5f; background: #fff5f5; border: none;
+            padding: 8px 12px; border-radius: 10px; transition: 0.2s;
+        }
+        .btn-delete:hover { background: #ff5f5f; color: white; }
+
+        /* Modal Styling */
+        .modal-content { border-radius: 25px; border: none; padding: 15px; }
+        .form-control { border-radius: 12px; padding: 12px; border: 2px solid #f0f3f9; }
+        .form-control:focus { border-color: var(--accent); box-shadow: none; }
+    </style>
+</head>
+<body>
+
+    <div class="loading-bar"></div>
+
+    <aside class="sidebar">
+        <a href="dashboard.html" class="sidebar-brand">SMS PORTAL</a>
+        <nav class="nav flex-column">
+            <a href="dashboard.html" class="nav-link"><i class="bi bi-grid-fill"></i>Dashboard</a>
+            <a href="students.html" class="nav-link"><i class="bi bi-people-fill"></i>Students</a>
+            <a href="courses.html" class="nav-link active"><i class="bi bi-journal-bookmark-fill"></i>Courses</a>
+            <a href="settings.html" class="nav-link"><i class="bi bi-gear-fill"></i>Settings</a>
+        </nav>
+        <a href="index.html" class="logout-btn"><i class="bi bi-box-arrow-left"></i>Logout</a>
+    </aside>
+
+    <div class="main-content">
+        <header class="d-flex justify-content-between align-items-center mb-5">
+            <div>
+                <h4 class="fw-bold mb-0">Course Management</h4>
+                <p class="text-muted small">Organize and manage academic curriculum</p>
+            </div>
+            <button class="btn btn-add-course" data-bs-toggle="modal" data-bs-target="#addCourseModal">
+                <i class="bi bi-plus-lg me-2"></i>Add New Course
+            </button>
+        </header>
+
+        <div class="course-card">
+            <div class="course-item">
+                <div class="d-flex align-items-center gap-3">
+                    <div class="course-icon">CS</div>
+                    <div>
+                        <h6 class="fw-bold mb-0">Computer Science & Engineering</h6>
+                        <small class="text-muted">Code: CSE-101 | 48 Students Enrolled</small>
+                    </div>
+                </div>
+                <button class="btn-delete" title="Delete Course"><i class="bi bi-trash3-fill"></i></button>
+            </div>
+
+            <div class="course-item">
+                <div class="d-flex align-items-center gap-3">
+                    <div class="course-icon">BA</div>
+                    <div>
+                        <h6 class="fw-bold mb-0">Business Administration</h6>
+                        <small class="text-muted">Code: BBA-202 | 32 Students Enrolled</small>
+                    </div>
+                </div>
+                <button class="btn-delete"><i class="bi bi-trash3-fill"></i></button>
+            </div>
+
+            <div class="course-item">
+                <div class="d-flex align-items-center gap-3">
+                    <div class="course-icon">GD</div>
+                    <div>
+                        <h6 class="fw-bold mb-0">Graphic Design & Arts</h6>
+                        <small class="text-muted">Code: GDA-303 | 15 Students Enrolled</small>
+                    </div>
+                </div>
+                <button class="btn-delete"><i class="bi bi-trash3-fill"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="addCourseModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content shadow-lg">
+                <div class="modal-header border-0">
+                    <h5 class="fw-bold">Create New Course</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="mb-3">
+                            <label class="form-label small fw-bold">Course Full Name</label>
+                            <input type="text" class="form-control" placeholder="e.g. Mechanical Engineering" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label small fw-bold">Course Code</label>
+                            <input type="text" class="form-control" placeholder="e.g. ME-101" required>
+                        </div>
+                        <div class="mb-4">
+                            <label class="form-label small fw-bold">Short Badge (2 Letters)</label>
+                            <input type="text" class="form-control" placeholder="e.g. ME" maxlength="2" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100 py-2 fw-bold" style="border-radius: 12px; background: var(--accent);">
+                            Save Course
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
