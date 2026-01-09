@@ -1,6 +1,6 @@
 # Ahmed's Student Management System (SMS)
 
-A clean and modern **Student Management System** web application built with **HTML, CSS, JavaScript, and Bootstrap**.  
+A clean and modern **Student Management System** web application built with **HTML, CSS, and Bootstrap**.  
 It allows administrators to manage students, courses, and records efficiently.
 
 ---
@@ -26,7 +26,7 @@ It allows administrators to manage students, courses, and records efficiently.
 
 ## Tech Stack
 
-- **Frontend:** HTML, CSS, JavaScript, Bootstrap 5  
+- **Frontend:** HTML, CSS, Bootstrap 5  
 - **Icons:** Bootstrap Icons  
 - **Fonts:** Google Fonts (Inter)
 
